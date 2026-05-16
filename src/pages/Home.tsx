@@ -45,8 +45,8 @@ export default function Home() {
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 space-y-4">
-             <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
-             <p className="text-emerald-800/60 font-bold">Scanning library...</p>
+            <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
+            <p className="text-emerald-800/60 font-bold">Scanning library...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -57,9 +57,9 @@ export default function Home() {
           </div>
         )}
       </section>
-      
+
       {/* Stats Section */}
-      <section className="py-24 bg-emerald-50/50">
+      {/* <section className="py-24 bg-emerald-50/50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
@@ -81,7 +81,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </MainLayout>
   );
 }
