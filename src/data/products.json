@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "Organic Copper Fungicide",
+    "image": "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&q=80&w=400",
+    "price": "$15.99",
+    "category": "Organic Control",
+    "description": "Effective against a wide range of fungal diseases including blight and leaf spot.",
+    "affiliateLink": "https://amazon.com"
+  },
+  {
+    "id": "2",
+    "title": "Premium Pruning Shears",
+    "image": "https://images.unsplash.com/photo-1592317130283-774f4b931dd2?auto=format&fit=crop&q=80&w=400",
+    "price": "$24.50",
+    "category": "Tools",
+    "description": "Ergonomic design for clean cuts, minimizing plant stress and disease entry points.",
+    "affiliateLink": "https://amazon.com"
+  },
+  {
+    "id": "3",
+    "title": "Neem Oil Spray",
+    "image": "https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&q=80&w=400",
+    "price": "$12.99",
+    "category": "Organic Control",
+    "description": "Natural insecticide and fungicide for roses and ornamentals.",
+    "affiliateLink": "https://amazon.com"
+  }
+]
