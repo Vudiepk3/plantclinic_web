@@ -1,7 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import ShoppingCard from '../components/ShoppingCard';
-import productData from '../data/products.json';
 import { Search, Package, Sparkles } from 'lucide-react';
 import { useDebounce } from '../hooks/useDebounce';
 
@@ -10,7 +9,25 @@ const categories = ['All', 'Organic Control', 'Chemical Control', 'Tools', 'Nutr
 export default function Shopping() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [productData, setProductData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const debouncedSearch = useDebounce(searchTerm, 300);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load products');
+        return res.json();
+      })
+      .then((data) => {
+        setProductData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching products:', err);
+        setLoading(false);
+      });
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return productData.filter((p) => {
@@ -18,7 +35,7 @@ export default function Shopping() {
       const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [debouncedSearch, selectedCategory]);
+  }, [productData, debouncedSearch, selectedCategory]);
 
   return (
     <MainLayout>
@@ -35,7 +52,7 @@ export default function Shopping() {
 
         {/* Filters */}
         <div className="flex flex-col lg:flex-row items-center gap-8 mb-16">
-           <div className="relative flex-1 w-full">
+          <div className="relative flex-1 w-full">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-300 w-6 h-6" />
             <input
               type="text"
@@ -50,11 +67,10 @@ export default function Shopping() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all border ${
-                  selectedCategory === cat
-                    ? 'bg-emerald-600 text-white border-emerald-600'
-                    : 'bg-white border-emerald-100 text-emerald-800/60 hover:border-emerald-500'
-                }`}
+                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all border ${selectedCategory === cat
+                  ? 'bg-emerald-600 text-white border-emerald-600'
+                  : 'bg-white border-emerald-100 text-emerald-800/60 hover:border-emerald-500'
+                  }`}
               >
                 {cat}
               </button>
@@ -63,7 +79,13 @@ export default function Shopping() {
         </div>
 
         {/* Product Grid */}
-        {filteredProducts.length > 0 ? (
+        {loading ? (
+          <div className="py-32 text-center animate-pulse">
+            <Package className="w-20 h-20 text-emerald-100 mx-auto mb-6 animate-bounce" />
+            <h3 className="text-2xl font-bold mb-2 text-emerald-950">Loading toolset...</h3>
+            <p className="text-emerald-800/60">Fetching safe products for you...</p>
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
             {filteredProducts.map((product, idx) => {
               const Card = ShoppingCard as any;

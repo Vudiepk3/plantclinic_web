@@ -58,9 +58,9 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm">
-                        <img 
-                          src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" 
-                          alt="PayPal" 
+                        <img
+                          src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg"
+                          alt="PayPal"
                           className="h-4 object-contain"
                         />
                       </div>
@@ -73,14 +73,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   </a>
 
                   <div className="grid grid-cols-2 gap-4">
-                     {['$10', '$25', '$50', '$100'].map((amount) => (
-                       <button 
-                         key={amount}
-                         className="p-4 border-2 border-emerald-50 rounded-2xl font-bold text-emerald-600 hover:border-emerald-600 hover:text-emerald-600 transition-all active:scale-95"
-                       >
-                         {amount}
-                       </button>
-                     ))}
+                    {['$10', '$25', '$50', '$100'].map((amount) => (
+                      <button
+                        key={amount}
+                        className="p-4 border-2 border-emerald-50 rounded-2xl font-bold text-emerald-600 hover:border-emerald-600 hover:text-emerald-600 transition-all active:scale-95"
+                      >
+                        {amount}
+                      </button>
+                    ))}
                   </div>
                 </div>
 

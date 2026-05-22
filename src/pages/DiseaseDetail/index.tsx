@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MainLayout from '../../layouts/MainLayout';
 import { motion } from 'motion/react';
-import { 
-  AlertCircle, 
-  CheckCircle2, 
-  HelpCircle, 
-  Info, 
-  Share2, 
+import {
+  AlertCircle,
+  CheckCircle2,
+  HelpCircle,
+  Info,
+  Share2,
   Bookmark,
   ChevronRight,
   Microscope,
@@ -19,10 +19,9 @@ import {
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useDiseases } from '../../context/DiseaseContext';
-import AdBanner from '../../components/AdBanner';
-import NativeAd from '../../components/NativeAd';
 import ErrorState from '../../components/ErrorState';
 import SafeImage from '../../components/SafeImage';
+import { getYoutubeEmbedUrl } from '../../utils/videoUtils';
 
 export default function DiseaseDetail() {
   const { id } = useParams();
@@ -37,6 +36,9 @@ export default function DiseaseDetail() {
   }, [id]);
 
   const disease = diseases.find((d) => d.id === id);
+  const activeImage = disease?.listImage
+    ? (Array.isArray(disease.listImage) ? disease.listImage[0] : disease.listImage)
+    : undefined;
 
   if (error) {
     return (
@@ -117,21 +119,21 @@ export default function DiseaseDetail() {
               </h1>
               <p className="text-2xl italic text-emerald-800/40 font-medium">{disease.scientific_name}</p>
             </div>
-            
+
             <div className="flex items-center gap-4">
-              <button 
+              <button
                 onClick={() => setIsBookmarked(!isBookmarked)}
                 className={cn(
                   "flex items-center gap-2 px-8 py-4 rounded-2xl font-black transition-all border shadow-sm text-lg",
-                  isBookmarked 
-                    ? "bg-emerald-600 border-emerald-600 text-white shadow-emerald-600/20" 
+                  isBookmarked
+                    ? "bg-emerald-600 border-emerald-600 text-white shadow-emerald-600/20"
                     : "bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300"
                 )}
               >
                 <Bookmark className={cn("w-6 h-6", isBookmarked && "fill-current")} />
                 {isBookmarked ? "Saved" : "Save Guide"}
               </button>
-              <button 
+              <button
                 onClick={async () => {
                   try {
                     await navigator.clipboard.writeText(window.location.href);
@@ -151,19 +153,20 @@ export default function DiseaseDetail() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           {/* MAIN COLUMN */}
           <div className="lg:col-span-8 space-y-8 pb-10">
-            
+
             {/* Redesigned: Image Stacked Above Info */}
             <div className="space-y-6">
-              {disease.listImage && (
-                <motion.div 
+              {activeImage && (
+                <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
+                  key={activeImage}
                   className="aspect-video md:aspect-[21/9] rounded-[3.5rem] overflow-hidden bg-white border border-emerald-100 shadow-2xl shadow-emerald-900/5"
                 >
-                  <SafeImage src={disease.listImage} alt={disease.title} className="w-full h-full object-cover" />
+                  <SafeImage src={activeImage} alt={disease.title} className="w-full h-full object-cover" />
                 </motion.div>
               )}
 
@@ -176,32 +179,26 @@ export default function DiseaseDetail() {
                   "{disease.summary || "No executive summary available for this dossier."}"
                 </p>
                 <div className="mt-8 flex flex-wrap gap-6 relative z-10">
-                   <div className="flex items-center gap-3 bg-emerald-50 px-6 py-3 rounded-2xl">
-                      <Activity className="w-5 h-5 text-emerald-600" />
-                      <span className="text-sm font-bold text-emerald-900 uppercase tracking-widest">{(disease.disease_type || 'Unknown').toUpperCase()} Pathogen</span>
-                   </div>
+                  <div className="flex items-center gap-3 bg-emerald-50 px-6 py-3 rounded-2xl">
+                    <Activity className="w-5 h-5 text-emerald-600" />
+                    <span className="text-sm font-bold text-emerald-900 uppercase tracking-widest">{(disease.disease_type || 'Unknown').toUpperCase()} Pathogen</span>
+                  </div>
                 </div>
               </div>
-
-              {/* Vị trí quảng cáo mong muốn */}
-              <AdBanner slotId="123456789" className="shadow-sm" />
             </div>
 
-            <DetailSection 
-              title="Recognize the Signs" 
-              icon={<AlertCircle className="w-6 h-6 text-orange-500" />} 
-              content={disease.symptoms || "No symptom documentation available."} 
-              image={disease.listImage} 
+            <DetailSection
+              title="Recognize the Signs"
+              icon={<AlertCircle className="w-6 h-6 text-orange-500" />}
+              content={disease.symptoms || "No symptom documentation available."}
+              image={Array.isArray(disease.listImage) ? disease.listImage[1] || disease.listImage[0] : disease.listImage}
             />
 
-            {/* Native Ads placement */}
-            <NativeAd slotId="987654321" />
-
-            <DetailSection 
-              title="Root Cause Analysis" 
-              icon={<HelpCircle className="w-6 h-6 text-red-500" />} 
-              content={disease.cause || "No cause documentation available."} 
-              image={disease.listImage} 
+            <DetailSection
+              title="Root Cause Analysis"
+              icon={<HelpCircle className="w-6 h-6 text-red-500" />}
+              content={disease.cause || "No cause documentation available."}
+              image={Array.isArray(disease.listImage) ? disease.listImage[2] || disease.listImage[0] : disease.listImage}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -228,18 +225,45 @@ export default function DiseaseDetail() {
               </div>
             </div>
 
-            <DetailSection 
-              title="Future Prevention Strategy" 
-              icon={<Microscope className="w-6 h-6 text-emerald-500" />} 
-              content={disease.prevention || "Standard crop hygiene is recommended."} 
-              isPositive 
+            <DetailSection
+              title="Future Prevention Strategy"
+              icon={<Microscope className="w-6 h-6 text-emerald-500" />}
+              content={disease.prevention || "Standard crop hygiene is recommended."}
+              isPositive
             />
+
+            {/* Video Section */}
+            {disease.videoUrl && getYoutubeEmbedUrl(disease.videoUrl) && (
+              <motion.section
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="space-y-6"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-red-600 flex items-center justify-center shadow-lg shadow-red-200">
+                    <Activity className="w-8 h-8 text-white" />
+                  </div>
+                  <h2 className="text-4xl font-black text-emerald-950 tracking-tight">Visual Field Report</h2>
+                </div>
+                <div className="aspect-video w-full rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-black">
+                  <iframe
+                    src={getYoutubeEmbedUrl(disease.videoUrl)!}
+                    title="Video case study"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="h-px bg-emerald-50 w-full" />
+              </motion.section>
+            )}
           </div>
 
           {/* SIDEBAR COLUMN */}
           <aside className="lg:col-span-4">
             <div className="sticky top-28 space-y-8">
-              
+
               {/* Biological Specs */}
               <div className="bg-white rounded-[3rem] p-10 border border-emerald-100 shadow-xl relative overflow-hidden">
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-3 text-emerald-950">
@@ -260,8 +284,8 @@ export default function DiseaseDetail() {
                   </div>
                   <div className="space-y-4">
                     {relatedDiseases.map((d) => (
-                      <Link 
-                        key={d.id} 
+                      <Link
+                        key={d.id}
                         to={`/disease/${d.id}`}
                         className="group flex items-center gap-5 p-4 rounded-[2rem] bg-white border border-emerald-50 hover:bg-emerald-50 hover:border-emerald-200 transition-all shadow-sm"
                       >
@@ -290,16 +314,16 @@ export default function DiseaseDetail() {
   );
 }
 
-function DetailSection({ 
-  title, 
-  icon, 
-  content, 
-  image, 
-  isPositive = false 
-}: { 
-  title: string; 
-  icon: React.ReactNode; 
-  content: string; 
+function DetailSection({
+  title,
+  icon,
+  content,
+  image,
+  isPositive = false
+}: {
+  title: string;
+  icon: React.ReactNode;
+  content: string;
   image?: string;
   isPositive?: boolean;
 }) {
@@ -311,21 +335,26 @@ function DetailSection({
       className="space-y-6"
     >
       <div className="flex items-center gap-6">
-         <div className={cn(
-           "w-16 h-16 rounded-[1.5rem] flex items-center justify-center shadow-lg",
-           isPositive ? "bg-emerald-600 shadow-emerald-200" : "bg-white border border-emerald-100 shadow-emerald-900/5"
-         )}>
-           {React.cloneElement(icon as React.ReactElement, { 
-             className: cn(
-               (icon as React.ReactElement).props.className, 
-               "w-8 h-8", 
-               isPositive && "text-white"
-             ) 
-           })}
-         </div>
-         <h2 className="text-4xl font-black text-emerald-950 tracking-tight">{title}</h2>
+        <div className={cn(
+          "w-16 h-16 rounded-[1.5rem] flex items-center justify-center shadow-lg",
+          isPositive ? "bg-emerald-600 shadow-emerald-200" : "bg-white border border-emerald-100 shadow-emerald-900/5"
+        )}>
+          {
+            React.cloneElement(
+              icon as React.ReactElement<{ className?: string }>,
+              {
+                className: cn(
+                  (icon as React.ReactElement<{ className?: string }>).props.className,
+                  "w-8 h-8",
+                  isPositive && "text-white"
+                )
+              }
+            )
+          }
+        </div>
+        <h2 className="text-4xl font-black text-emerald-950 tracking-tight">{title}</h2>
       </div>
-      
+
       <div className="flex flex-col gap-4">
         {image && (
           <div className="w-full aspect-video md:aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
