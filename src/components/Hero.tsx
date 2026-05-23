@@ -8,9 +8,9 @@ export default function Hero() {
     <section className="relative h-[90vh] flex items-center overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?auto=format&fit=crop&q=80&w=2000")'}}
+          style={{ backgroundImage: 'url("https://raw.githubusercontent.com/NguyenLinhK7/plantclinic/main/image/banner.jpg")' }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-50/90 via-emerald-50/40 to-transparent" />
       </div>
@@ -21,15 +21,15 @@ export default function Hero() {
           <motion.div
             key={i}
             initial={{ y: -100, x: Math.random() * 1000, opacity: 0, rotate: 0 }}
-            animate={{ 
-              y: 1000, 
-              x: Math.random() * 1000 + 100, 
-              opacity: [0, 0.4, 0], 
-              rotate: 360 
+            animate={{
+              y: 1000,
+              x: Math.random() * 1000 + 100,
+              opacity: [0, 0.4, 0],
+              rotate: 360
             }}
-            transition={{ 
-              duration: 10 + Math.random() * 10, 
-              repeat: Infinity, 
+            transition={{
+              duration: 10 + Math.random() * 10,
+              repeat: Infinity,
               ease: 'linear',
               delay: Math.random() * 5
             }}

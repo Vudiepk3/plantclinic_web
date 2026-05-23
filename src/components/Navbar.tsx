@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Facebook, Youtube, Heart } from 'lucide-react';
+import { Menu, X, Facebook, Youtube } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../utils/cn';
 import { useDonation } from '../context/DonationContext';
 import { SOCIAL_LINKS } from '../utils/safeLinks';
+import logoUrl from '../image/logo.png';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -42,9 +43,11 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-200/50">
-            <Heart className="text-white w-5 h-5 fill-current" />
-          </div>
+          <img
+            src={logoUrl}
+            alt="PlantClinic"
+            className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-emerald-200/50"
+          />
           <span className="text-xl font-bold tracking-tight text-emerald-950">
             Plant<span className="text-emerald-600">Clinic</span>
           </span>

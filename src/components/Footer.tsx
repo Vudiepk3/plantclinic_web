@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Heart, Facebook, Youtube } from 'lucide-react';
 import { useDonation } from '../context/DonationContext';
 import { openExternalLink, SOCIAL_LINKS } from '../utils/safeLinks';
+import logoUrl from '../image/logo.png';
 
 export default function Footer() {
   const { openDonationModal } = useDonation();
@@ -14,9 +15,11 @@ export default function Footer() {
           {/* Logo & Info */}
           <div className="col-span-1 md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-6">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <Heart className="text-white w-5 h-5 fill-current" />
-              </div>
+              <img
+                src={logoUrl}
+                alt="PlantClinic"
+                className="w-8 h-8 rounded-lg object-cover"
+              />
               <span className="text-xl font-bold tracking-tight text-emerald-900">
                 PlantClinic
               </span>
