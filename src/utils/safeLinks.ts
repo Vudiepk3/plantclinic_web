@@ -3,6 +3,24 @@ export const SOCIAL_LINKS = {
   facebook: 'https://www.facebook.com/profile.php?id=61575387878909',
 };
 
+const PAYPAL_PAYMENT_EMAIL = 'vulq2k31@gmail.com';
+
+export const getPaypalDonationLink = (amount?: number) => {
+  const params = new URLSearchParams({
+    cmd: '_xclick',
+    business: PAYPAL_PAYMENT_EMAIL,
+    item_name: 'PlantClinic Support',
+    currency_code: 'USD',
+    no_shipping: '1',
+  });
+
+  if (amount) {
+    params.set('amount', amount.toFixed(2));
+  }
+
+  return `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+};
+
 /**
  * Safely handles external navigation with error checking
  */

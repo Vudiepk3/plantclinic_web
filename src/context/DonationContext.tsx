@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import DonationModal from '../components/DonationModal';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { getPaypalDonationLink, openExternalLink } from '../utils/safeLinks';
 
 interface DonationContextType {
   openDonationModal: () => void;
@@ -9,15 +9,12 @@ interface DonationContextType {
 const DonationContext = createContext<DonationContextType | undefined>(undefined);
 
 export function DonationProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openDonationModal = () => setIsOpen(true);
-  const closeDonationModal = () => setIsOpen(false);
+  const openDonationModal = () => openExternalLink(getPaypalDonationLink());
+  const closeDonationModal = () => undefined;
 
   return (
     <DonationContext.Provider value={{ openDonationModal, closeDonationModal }}>
       {children}
-      <DonationModal isOpen={isOpen} onClose={closeDonationModal} />
     </DonationContext.Provider>
   );
 }

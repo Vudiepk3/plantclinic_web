@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Heart, ExternalLink, ShieldCheck } from 'lucide-react';
-import { cn } from '../utils/cn';
+import { getPaypalDonationLink } from '../utils/safeLinks';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -9,6 +9,8 @@ interface DonationModalProps {
 }
 
 export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
+  const donationAmounts = [1, 2, 5, 10];
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -51,7 +53,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
                 <div className="space-y-4">
                   <a
-                    href="https://paypal.me/yourusername"
+                    href={getPaypalDonationLink()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-6 bg-emerald-50 hover:bg-emerald-100 rounded-[28px] group transition-all"
@@ -73,13 +75,16 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   </a>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {['$1', '$2', '$5', '$10'].map((amount) => (
-                      <button
+                    {donationAmounts.map((amount) => (
+                      <a
                         key={amount}
+                        href={getPaypalDonationLink(amount)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="p-4 border-2 border-emerald-50 rounded-2xl font-bold text-emerald-600 hover:border-emerald-600 hover:text-emerald-600 transition-all active:scale-95"
                       >
-                        {amount}
-                      </button>
+                        ${amount}
+                      </a>
                     ))}
                   </div>
                 </div>
