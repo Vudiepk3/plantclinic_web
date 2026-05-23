@@ -73,7 +73,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   </a>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {['$10', '$25', '$50', '$100'].map((amount) => (
+                    {['$1', '$2', '$5', '$10'].map((amount) => (
                       <button
                         key={amount}
                         className="p-4 border-2 border-emerald-50 rounded-2xl font-bold text-emerald-600 hover:border-emerald-600 hover:text-emerald-600 transition-all active:scale-95"
