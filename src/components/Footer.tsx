@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Facebook, Youtube } from 'lucide-react';
 import { useDonation } from '../context/DonationContext';
-import { openExternalLink } from '../utils/safeLinks';
+import { openExternalLink, SOCIAL_LINKS } from '../utils/safeLinks';
 
 export default function Footer() {
   const { openDonationModal } = useDonation();
@@ -52,11 +52,11 @@ export default function Footer() {
             <div className="flex space-x-4 mb-6">
               <SocialIcon 
                 icon={<Facebook className="w-5 h-5" />} 
-                onClick={() => openExternalLink('https://facebook.com/plantclinic')} 
+                onClick={() => openExternalLink(SOCIAL_LINKS.facebook)} 
               />
               <SocialIcon 
                 icon={<Youtube className="w-5 h-5" />} 
-                onClick={() => openExternalLink('https://youtube.com/c/plantclinic')} 
+                onClick={() => openExternalLink(SOCIAL_LINKS.youtube)} 
               />
             </div>
             <button

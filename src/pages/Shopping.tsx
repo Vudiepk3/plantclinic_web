@@ -3,22 +3,19 @@ import MainLayout from '../layouts/MainLayout';
 import ShoppingCard from '../components/ShoppingCard';
 import { Search, Package, Sparkles } from 'lucide-react';
 import { useDebounce } from '../hooks/useDebounce';
+import { fetchProducts, type Product } from '../services/dataService';
 
 const categories = ['All', 'Organic Control', 'Chemical Control', 'Tools', 'Nutrients'];
 
 export default function Shopping() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [productData, setProductData] = useState<any[]>([]);
+  const [productData, setProductData] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   useEffect(() => {
-    fetch('/api/products')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load products');
-        return res.json();
-      })
+    fetchProducts()
       .then((data) => {
         setProductData(data);
         setLoading(false);

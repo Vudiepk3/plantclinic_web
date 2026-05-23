@@ -1,3 +1,8 @@
+export const SOCIAL_LINKS = {
+  youtube: 'https://www.youtube.com/@gardening_problems_solved',
+  facebook: 'https://www.facebook.com/profile.php?id=61575387878909',
+};
+
 /**
  * Safely handles external navigation with error checking
  */

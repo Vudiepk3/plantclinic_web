@@ -2,7 +2,7 @@ import React from 'react';
 import { Facebook, Youtube, Heart } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useDonation } from '../context/DonationContext';
-import { openExternalLink } from '../utils/safeLinks';
+import { openExternalLink, SOCIAL_LINKS } from '../utils/safeLinks';
 
 export default function FloatingSocials() {
   const { openDonationModal } = useDonation();
@@ -12,12 +12,12 @@ export default function FloatingSocials() {
       <SocialButton 
         icon={<Facebook className="w-6 h-6 text-emerald-600" />} 
         label="Facebook" 
-        onClick={() => openExternalLink('https://facebook.com/plantclinic')} 
+        onClick={() => openExternalLink(SOCIAL_LINKS.facebook)} 
       />
       <SocialButton 
         icon={<Youtube className="w-6 h-6 text-red-600" />} 
         label="YouTube" 
-        onClick={() => openExternalLink('https://youtube.com/c/plantclinic')} 
+        onClick={() => openExternalLink(SOCIAL_LINKS.youtube)} 
       />
       <motion.div
         onClick={openDonationModal}

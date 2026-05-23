@@ -3,13 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import SafeImage from './SafeImage';
 import { openExternalLink } from '../utils/safeLinks';
-
-export interface Slide {
-  title: string;
-  subtitle: string;
-  image: string;
-  youtubeUrl: string;
-}
+import { fetchSlides, type Slide } from '../services/dataService';
 
 export default function Slider() {
   const [slides, setSlides] = useState<Slide[]>([]);
@@ -17,11 +11,7 @@ export default function Slider() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/slider')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load slider data');
-        return res.json();
-      })
+    fetchSlides()
       .then((data) => {
         setSlides(data);
         setLoading(false);

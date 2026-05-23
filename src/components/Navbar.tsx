@@ -4,6 +4,7 @@ import { Menu, X, Facebook, Youtube, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../utils/cn';
 import { useDonation } from '../context/DonationContext';
+import { SOCIAL_LINKS } from '../utils/safeLinks';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -70,10 +71,22 @@ export default function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           <div className="flex items-center space-x-2 border-l border-emerald-100 pl-4">
-            <a href="https://facebook.com" className="p-2 text-emerald-800/40 hover:text-emerald-600 transition-colors">
+            <a
+              href={SOCIAL_LINKS.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="p-2 text-emerald-800/40 hover:text-emerald-600 transition-colors"
+            >
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="https://youtube.com" className="p-2 text-emerald-800/40 hover:text-emerald-600 transition-colors">
+            <a
+              href={SOCIAL_LINKS.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="p-2 text-emerald-800/40 hover:text-emerald-600 transition-colors"
+            >
               <Youtube className="w-5 h-5" />
             </a>
             <button
@@ -121,10 +134,20 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-6 border-t border-emerald-50 flex items-center space-x-6">
-                <a href="#" className="flex items-center gap-2 text-emerald-800/60">
+                <a
+                  href={SOCIAL_LINKS.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-emerald-800/60"
+                >
                   <Facebook className="w-5 h-5" /> Facebook
                 </a>
-                <a href="#" className="flex items-center gap-2 text-emerald-800/60">
+                <a
+                  href={SOCIAL_LINKS.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-emerald-800/60"
+                >
                   <Youtube className="w-5 h-5" /> YouTube
                 </a>
               </div>
