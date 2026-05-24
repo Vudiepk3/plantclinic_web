@@ -13,11 +13,24 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { DonationProvider } from './context/DonationContext';
 import { DiseaseProvider } from './context/DiseaseContext';
 
+function getRouterBasename() {
+  if (import.meta.env.DEV) return '/';
+  if (import.meta.env.VITE_ROUTER_BASENAME) {
+    return import.meta.env.VITE_ROUTER_BASENAME;
+  }
+  if (window.location.pathname.startsWith('/plantclinic_web')) {
+    return '/plantclinic_web/';
+  }
+  return '/';
+}
+
+const routerBasename = getRouterBasename();
+
 export default function App() {
   return (
     <DiseaseProvider>
       <DonationProvider>
-        <Router basename={import.meta.env.BASE_URL}>
+        <Router basename={routerBasename}>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
