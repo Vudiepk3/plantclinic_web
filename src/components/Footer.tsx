@@ -40,26 +40,26 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div>
+          {/* <div>
             <h4 className="font-bold text-emerald-950 mb-6">Support</h4>
             <ul className="space-y-4">
               <li><Link to="/privacy" className="text-sm text-emerald-800/60 hover:text-emerald-600 transition-colors">Privacy Policy</Link></li>
               <li><Link to="/contact" className="text-sm text-emerald-800/60 hover:text-emerald-600 transition-colors">Contact Information</Link></li>
               <li><Link to="/faq" className="text-sm text-emerald-800/60 hover:text-emerald-600 transition-colors">FAQs</Link></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact & Social */}
           <div>
             <h4 className="font-bold text-emerald-950 mb-6">Stay Connected</h4>
             <div className="flex space-x-4 mb-6">
-              <SocialIcon 
-                icon={<Facebook className="w-5 h-5" />} 
-                onClick={() => openExternalLink(SOCIAL_LINKS.facebook)} 
+              <SocialIcon
+                icon={<Facebook className="w-5 h-5" />}
+                onClick={() => openExternalLink(SOCIAL_LINKS.facebook)}
               />
-              <SocialIcon 
-                icon={<Youtube className="w-5 h-5" />} 
-                onClick={() => openExternalLink(SOCIAL_LINKS.youtube)} 
+              <SocialIcon
+                icon={<Youtube className="w-5 h-5" />}
+                onClick={() => openExternalLink(SOCIAL_LINKS.youtube)}
               />
             </div>
             <button

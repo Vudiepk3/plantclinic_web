@@ -7,24 +7,24 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useDiseases } from '../context/DiseaseContext';
 import ErrorState from '../components/ErrorState';
 
-const categories = ['All', 'Fungal', 'Bacterial', 'Viral', 'Pest'];
+const categories = ['All', 'Fungal', 'Bacterial', 'Viral', 'Pest', 'Weeds', 'Insect Pests', 'Nutrient Deficiencies', 'Other'];
 
 export default function Diseases() {
   const { diseases, loading, error, refresh } = useDiseases();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('newest');
-  
+
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   const filteredDiseases = useMemo(() => {
     let result = diseases.filter((d) => {
-      const matchesSearch = 
+      const matchesSearch =
         d.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
         d.scientific_name.toLowerCase().includes(debouncedSearch.toLowerCase());
-      
+
       const matchesCategory = selectedCategory === 'All' || d.disease_type === selectedCategory;
-      
+
       return matchesSearch && matchesCategory;
     });
 
@@ -65,16 +65,16 @@ export default function Diseases() {
 
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
             <div className="flex items-center gap-2 p-2 bg-emerald-50/30 rounded-2xl border border-emerald-100">
-               <SlidersHorizontal className="w-4 h-4 text-emerald-400 ml-2" />
-               <select 
+              <SlidersHorizontal className="w-4 h-4 text-emerald-400 ml-2" />
+              <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-transparent border-none text-sm font-semibold focus:ring-0 cursor-pointer pr-8 text-emerald-900"
-               >
-                 <option value="newest">Newest First</option>
-                 <option value="alphabetical">Alphabetical</option>
-                 <option value="popular">Most Popular</option>
-               </select>
+              >
+                <option value="newest">Newest First</option>
+                <option value="alphabetical">Alphabetical</option>
+                <option value="popular">Most Popular</option>
+              </select>
             </div>
           </div>
         </div>
@@ -85,11 +85,10 @@ export default function Diseases() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-8 py-3 rounded-2xl text-sm font-bold transition-all border ${
-                selectedCategory === cat
-                  ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-600/20'
-                  : 'bg-white border-emerald-100 text-emerald-800/60 hover:border-emerald-500 hover:text-emerald-500'
-              }`}
+              className={`px-8 py-3 rounded-2xl text-sm font-bold transition-all border ${selectedCategory === cat
+                ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-600/20'
+                : 'bg-white border-emerald-100 text-emerald-800/60 hover:border-emerald-500 hover:text-emerald-500'
+                }`}
             >
               {cat}
             </button>
@@ -106,9 +105,9 @@ export default function Diseases() {
               <p className="text-emerald-800/60 font-bold">Fetching latest plant health data...</p>
             </div>
           ) : filteredDiseases.length > 0 ? (
-            <motion.div 
-               layout
-               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24"
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24"
             >
               {filteredDiseases.map((disease, idx) => {
                 const Card = DiseaseCard as any;

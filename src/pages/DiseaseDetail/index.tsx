@@ -120,7 +120,7 @@ export default function DiseaseDetail() {
               <p className="text-2xl italic text-emerald-800/40 font-medium">{disease.scientific_name}</p>
             </div>
 
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsBookmarked(!isBookmarked)}
                 className={cn(
@@ -146,7 +146,7 @@ export default function DiseaseDetail() {
               >
                 <Share2 className="w-6 h-6" />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
